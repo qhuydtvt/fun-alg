@@ -1,7 +1,4 @@
 import tkbases.GameCanvas;
-import tkbases.GameObject;
-import tkbases.ImageRenderer;
-import tkbases.Vector2D;
 
 /**
  * Created by huynq on 1/28/18.

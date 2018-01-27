@@ -1,5 +1,6 @@
-package tkbases;
+package tkbases.renderers;
 
+import tkbases.Vector2D;
 import tkbases.utils.SpriteUtils;
 
 import java.awt.Graphics;

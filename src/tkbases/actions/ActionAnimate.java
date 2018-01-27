@@ -1,8 +1,7 @@
 package tkbases.actions;
 
-import tkbases.Animation;
+import tkbases.renderers.Animation;
 import tkbases.GameObject;
-import tkbases.Renderer;
 
 /**
  * Created by huynq on 8/20/17.

@@ -1,4 +1,4 @@
-package tkbases;
+package tkbases.components;
 
 import tkbases.GameObject;
 

@@ -1,6 +1,7 @@
 package tkbases;
 
 import tkbases.actions.Action;
+import tkbases.renderers.Renderer;
 
 import java.awt.Graphics;
 import java.util.Iterator;

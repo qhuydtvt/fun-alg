@@ -1,5 +1,7 @@
-package tkbases;
+package tkbases.renderers;
 
+import tkbases.Vector2D;
+import tkbases.renderers.Renderer;
 import tkbases.utils.SpriteUtils;
 
 import java.awt.image.BufferedImage;

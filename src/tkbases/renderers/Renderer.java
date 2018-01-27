@@ -1,4 +1,6 @@
-package tkbases;
+package tkbases.renderers;
+
+import tkbases.Vector2D;
 
 import java.awt.*;
 
