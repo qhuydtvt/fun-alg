@@ -16,6 +16,10 @@ public class ImageRenderer implements Renderer {
         this.image = image;
     }
 
+    public ImageRenderer(String url) {
+        this(SpriteUtils.loadImage(url));
+    }
+
     @Override
     public void render(Graphics graphics, Vector2D position) {
         SpriteUtils.renderAtCenter(graphics, image, position.x, position.y);

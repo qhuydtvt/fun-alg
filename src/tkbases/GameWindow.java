@@ -1,22 +1,23 @@
 package tkbases;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
 
 public class GameWindow extends JFrame {
     private GameCanvas gameCanvas;
     private long lastTime = 0;
 
-    private int screenWidth = 800;
-    private int screenHeight = 800;
+    private static final int screenWidth = 800;
+    private static final int screenHeight = 800;
 
     public GameWindow() {
-        this.setupGameCanvas();
+        this(new GameCanvas(screenWidth, screenHeight));
+    }
+
+    public GameWindow(GameCanvas gameCanvas) {
+        this.setupGameCanvas(gameCanvas);
         this.setupWindow();
-        this.hideCursor();
     }
 
     private void setupWindow() {
@@ -31,16 +32,10 @@ public class GameWindow extends JFrame {
         });
     }
 
-    private void setupGameCanvas() {
-        this.gameCanvas = new GameCanvas(screenWidth, screenHeight);
+    private void setupGameCanvas(GameCanvas gameCanvas) {
+        this.gameCanvas = gameCanvas;
         this.setContentPane(this.gameCanvas);
         this.gameCanvas.setVisible(true);
-    }
-
-    private void hideCursor() {
-        BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
-        Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImg, new Point(0, 0), "blank cursor");
-        this.getContentPane().setCursor(cursor);
     }
 
     public void gameLoop() {
@@ -51,7 +46,6 @@ public class GameWindow extends JFrame {
                 this.gameCanvas.render();
                 this.lastTime = currentTime;
             }
-
         }
     }
 }
