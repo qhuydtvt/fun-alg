@@ -14,7 +14,7 @@ import java.util.Vector;
 public class GameObject {
 
     protected boolean isActive = true;
-    protected Vector2D position;
+    public Vector2D position;
     protected Renderer renderer;
     protected List<GameObject> children;
     protected Vector2D screenPosition;

@@ -1,3 +1,5 @@
+package clumsybot;
+
 import tkbases.GameWindow;
 
 /**
