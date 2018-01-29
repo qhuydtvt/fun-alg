@@ -4,6 +4,7 @@ import clumsybot.Settings;
 import clumsybot.bots.Bot;
 import clumsybot.maps.pickables.Gem;
 import tkbases.GameObject;
+import tkbases.Vector2D;
 
 /**
  * Created by huynq on 1/28/18.
@@ -71,6 +72,7 @@ public class Map extends GameObject {
 
     private void setupGems() {
         addMapObject(new Gem(), 0, 1);
+        addMapObject(new Wall(), 1, 1);
     }
 
     private void setupBot() {
@@ -87,5 +89,9 @@ public class Map extends GameObject {
                 this.children.add(newMapBrick);
             }
         }
+    }
+
+    public static Vector2D translate(MapPosition position) {
+        return new Vector2D(position.col * Settings.MAP_CELL_SIZE, position.row * Settings.MAP_CELL_SIZE);
     }
 }

@@ -11,6 +11,8 @@ import tkbases.Vector2D;
 import tkbases.actions.*;
 import tkbases.renderers.ImageRenderer;
 
+import java.util.Set;
+
 /**
  * Created by huynq on 1/28/18.
  */
@@ -99,11 +101,25 @@ public class Bot extends GameObject {
         return aheadPosition;
     }
 
+    private Vector2D aheadPosition() {
+        Vector2D returnValue = position.clone();
+
+        switch (direction) {
+            case LEFT: returnValue.x -= Settings.MAP_CELL_SIZE; break;
+            case RIGHT: returnValue.x += Settings.MAP_CELL_SIZE; break;
+            case UP: returnValue.y -= Settings.MAP_CELL_SIZE; break;
+            case DOWN: returnValue.y += Settings.MAP_CELL_SIZE; break;
+        }
+
+        return returnValue;
+    }
+
     public void pickUp() {
 
         MapPosition aheadPosition = this.aheadMapPosition();
 
         MapObject mapObject = Map.instance.objectAt(aheadPosition);
+
         if (mapObject instanceof Pickable) {
             Pickable pickable = (Pickable)mapObject;
 
@@ -114,7 +130,7 @@ public class Bot extends GameObject {
                 public boolean execute(GameObject owner) {
                     Bot bot = (Bot)owner;
                     bot.pickable = pickable;
-                    bot.joint = pickable.getPosition().subtract(bot.position);
+                    bot.joint = pickable.getPosition().subtract(bot.position).multiply(0.4);
                     bot.startJointAngle = bot.transform.angle;
                     return true;
                 }
@@ -128,10 +144,15 @@ public class Bot extends GameObject {
     }
 
     public void putDown() {
+        if(Map.instance.objectAt(aheadMapPosition()) != null) return;
+
+        Vector2D putDownPosition = Map.translate(aheadMapPosition());
+
         sequence.addAction(new Action() {
             @Override
             public boolean execute(GameObject owner) {
                 Bot bot = (Bot)owner;
+                bot.pickable.getPosition().set(putDownPosition);
                 Map.instance.setMapObjectAt((MapObject)bot.pickable, aheadMapPosition());
                 bot.pickable = null;
                 bot.joint = null;

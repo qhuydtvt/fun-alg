@@ -25,8 +25,11 @@ public class BotCanvas extends GameCanvas {
         Bot.instance.pickUp();
         Bot.instance.forward();
         Bot.instance.right();
-        Bot.instance.putDown();
         Bot.instance.right();
+        Bot.instance.right();
+        Bot.instance.right();
+        Bot.instance.forward();
+        Bot.instance.putDown();
         Bot.instance.right();
         Bot.instance.forward();
     }
