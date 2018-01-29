@@ -1,4 +1,4 @@
-package clumsybot.grabables;
+package clumsybot.maps.pickables;
 
 import clumsybot.BotDirection;
 import tkbases.Vector2D;

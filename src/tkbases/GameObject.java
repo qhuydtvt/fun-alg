@@ -64,7 +64,7 @@ public class GameObject {
         }
     }
 
-    public static <T extends GameObject> T find(Class<T> classz) {
+    public static <T> T find(Class<T> classz) {
         synchronized (gameObjectLock) {
             for (GameObject gameObject: gameObjects) {
                 if (gameObject.isActive()) {

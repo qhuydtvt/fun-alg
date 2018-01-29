@@ -2,7 +2,10 @@ package clumsybot.bots;
 
 import clumsybot.BotDirection;
 import clumsybot.Settings;
-import clumsybot.grabables.Pickable;
+import clumsybot.maps.Map;
+import clumsybot.maps.MapObject;
+import clumsybot.maps.MapPosition;
+import clumsybot.maps.pickables.Pickable;
 import tkbases.GameObject;
 import tkbases.Vector2D;
 import tkbases.actions.*;
@@ -12,8 +15,8 @@ import tkbases.renderers.ImageRenderer;
  * Created by huynq on 1/28/18.
  */
 public class Bot extends GameObject {
-    public int col;
-    public int row;
+    public MapPosition mapPosition;
+
     public BotDirection direction;
 
     private ImageRenderer imageRenderer;
@@ -30,30 +33,33 @@ public class Bot extends GameObject {
         super();
         imageRenderer = new ImageRenderer("assets/images/robot.png");
         renderer = imageRenderer;
-        col = 0;
-        row = 0;
+        mapPosition = new MapPosition();
         direction = BotDirection.RIGHT;
         sequence = new ActionSequence();
         addAction(sequence);
     }
 
+
     public void forward() {
+        if (!Map.instance.validPosition(aheadMapPosition())) return;
+
         Vector2D moveDelta = Vector2D.ZERO;
+
         switch (direction) {
             case LEFT:
-                col--;
+                mapPosition.col--;
                 moveDelta = Vector2D.LEFT.multiply(Settings.MAP_CELL_SIZE);
                 break;
             case RIGHT:
-                col++;
+                mapPosition.col++;
                 moveDelta = Vector2D.RIGHT.multiply(Settings.MAP_CELL_SIZE);
                 break;
             case UP:
-                row--;
+                mapPosition.row--;
                 moveDelta = Vector2D.UP.multiply(Settings.MAP_CELL_SIZE);
                 break;
             case DOWN:
-                row++;
+                mapPosition.row++;
                 moveDelta = Vector2D.DOWN.multiply(Settings.MAP_CELL_SIZE);
                 break;
         }
@@ -80,22 +86,45 @@ public class Bot extends GameObject {
         sequence.addAction(new ActionRotateBy(90, 15));
     }
 
-    public void pickUp(Pickable pickable) {
-        sequence.addAction(new Action() {
-            @Override
-            public boolean execute(GameObject owner) {
-                Bot bot = (Bot)owner;
-                bot.pickable = pickable;
-                bot.joint = pickable.getPosition().subtract(bot.position);
-                bot.startJointAngle = bot.transform.angle;
-                return true;
-            }
+    private MapPosition aheadMapPosition() {
+        MapPosition aheadPosition = mapPosition.clone();
 
-            @Override
-            public void reset() {
+        switch (direction) {
+            case LEFT: aheadPosition.col--; break;
+            case RIGHT: aheadPosition.col++; break;
+            case UP: aheadPosition.row--; break;
+            case DOWN: aheadPosition.row++; break;
+        }
 
-            }
-        });
+        return aheadPosition;
+    }
+
+    public void pickUp() {
+
+        MapPosition aheadPosition = this.aheadMapPosition();
+
+        MapObject mapObject = Map.instance.objectAt(aheadPosition);
+        if (mapObject instanceof Pickable) {
+            Pickable pickable = (Pickable)mapObject;
+
+            Map.instance.setMapObjectAt(null, aheadPosition);
+
+            sequence.addAction(new Action() {
+                @Override
+                public boolean execute(GameObject owner) {
+                    Bot bot = (Bot)owner;
+                    bot.pickable = pickable;
+                    bot.joint = pickable.getPosition().subtract(bot.position);
+                    bot.startJointAngle = bot.transform.angle;
+                    return true;
+                }
+
+                @Override
+                public void reset() {
+
+                }
+            });
+        }
     }
 
     public void putDown() {
@@ -103,6 +132,7 @@ public class Bot extends GameObject {
             @Override
             public boolean execute(GameObject owner) {
                 Bot bot = (Bot)owner;
+                Map.instance.setMapObjectAt((MapObject)bot.pickable, aheadMapPosition());
                 bot.pickable = null;
                 bot.joint = null;
                 bot.startJointAngle = 0;

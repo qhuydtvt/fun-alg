@@ -2,12 +2,8 @@ package clumsybot.maps;
 
 import clumsybot.Settings;
 import clumsybot.bots.Bot;
-import clumsybot.grabables.Gem;
+import clumsybot.maps.pickables.Gem;
 import tkbases.GameObject;
-import tkbases.Vector2D;
-
-import java.awt.*;
-import java.util.ArrayList;
 
 /**
  * Created by huynq on 1/28/18.
@@ -16,6 +12,8 @@ public class Map extends GameObject {
     public int numOfColumns;
     public int numOfRows;
 
+    public MapObject[][] mapObjects;
+
     public static final Map instance = new Map(10, 10);
 
     private Map(int numOfColumns, int numOfRows) {
@@ -23,35 +21,70 @@ public class Map extends GameObject {
         this.numOfColumns = numOfColumns;
         this.numOfRows = numOfRows;
         this.setupCells();
+        this.setupMapObjects();
         this.setupGems();
         this.setupBot();
     }
 
+    private void setupMapObjects() {
+        mapObjects = new MapObject[numOfRows][numOfColumns];
+    }
+
+    private <T extends MapObject> T addMapObject(T object, int row, int col) {
+        mapObjects[row][col] = object;
+        this.children.add(object);
+        object.position.set(col * Settings.MAP_CELL_SIZE, row * Settings.MAP_CELL_SIZE);
+        return object;
+    }
+
+    public void setMapObjectAt(MapObject mapObject, int row, int col) {
+        if (row >= 0 && row < numOfRows && col >= 0 && col < numOfColumns) {
+            mapObjects[row][col] = mapObject;
+        }
+    }
+
+    public void setMapObjectAt(MapObject mapObject, MapPosition mapPosition) {
+        setMapObjectAt(mapObject, mapPosition.row, mapPosition.col);
+    }
+
+    public MapObject objectAt(MapPosition position) {
+        return objectAt(position.row, position.col);
+    }
+
+    public MapObject objectAt(int row, int col) {
+        if (row >= 0 && row < numOfRows && col >= 0 && col < numOfColumns) {
+            return mapObjects[row][col];
+        }
+        return null;
+    }
+
+    public boolean validPosition(int row, int col) {
+        if (row >= 0 && row < numOfRows && col >= 0 && col < numOfColumns) {
+            return mapObjects[row][col] == null;
+        }
+        return false;
+    }
+
+    public boolean validPosition(MapPosition position) {
+        return validPosition(position.row, position.col);
+    }
+
     private void setupGems() {
-        Gem gem = new Gem();
-        gem.position.set(Settings.MAP_CELL_SIZE, 0);
-        this.children.add(gem);
-        Bot.instance.pickUp(gem);
+        addMapObject(new Gem(), 0, 1);
     }
 
     private void setupBot() {
-//        Bot.instance.right();
         this.children.add(Bot.instance);
-        Bot.instance.right();
-        Bot.instance.forward();
-        Bot.instance.putDown();
-        Bot.instance.right();
-        Bot.instance.forward();
     }
 
     private void setupCells() {
         for(int row = 0; row < numOfRows; row++) {
             for (int col = 0; col < numOfColumns; col++) {
-                MapCell newMapCell = new MapCell();
-                newMapCell.position.set(
+                MapBrick newMapBrick = new MapBrick();
+                newMapBrick.position.set(
                         col * Settings.MAP_CELL_SIZE,
                         row * Settings.MAP_CELL_SIZE);
-                this.children.add(newMapCell);
+                this.children.add(newMapBrick);
             }
         }
     }

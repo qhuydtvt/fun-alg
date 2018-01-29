@@ -9,9 +9,9 @@ import java.awt.*;
 /**
  * Created by huynq on 1/28/18.
  */
-public class MapCell extends GameObject {
+public class MapBrick extends GameObject {
 
-    public MapCell() {
+    public MapBrick() {
         super();
         this.renderer = new ImageRenderer("assets/images/brick.png");
     }
