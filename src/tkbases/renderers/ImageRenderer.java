@@ -9,12 +9,14 @@ import java.awt.image.BufferedImage;
 /**
  * Created by huynq on 5/11/17.
  */
-public class ImageRenderer implements Renderer {
+public class ImageRenderer implements Renderer, Transformable {
 
     private BufferedImage image;
+    public Transform transform;
 
     public ImageRenderer(BufferedImage image) {
         this.image = image;
+        this.transform = new Transform();
     }
 
     public ImageRenderer(String url) {
@@ -23,7 +25,12 @@ public class ImageRenderer implements Renderer {
 
     @Override
     public void render(Graphics graphics, Vector2D position) {
-        SpriteUtils.renderAtCenter(graphics, image, position.x, position.y);
+        transform.render(graphics, image, position);
+    }
+
+    @Override
+    public Transform getTransform() {
+        return transform;
     }
 
     public int getWidth() {

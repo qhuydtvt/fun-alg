@@ -4,7 +4,6 @@ import tkbases.actions.Action;
 import tkbases.renderers.Renderer;
 
 import java.awt.Graphics;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -15,7 +14,7 @@ public class GameObject {
 
     protected boolean isActive = true;
     public Vector2D position;
-    protected Renderer renderer;
+    public Renderer renderer;
     protected List<GameObject> children;
     protected Vector2D screenPosition;
 
@@ -36,6 +35,7 @@ public class GameObject {
                 gameObject.update(null);
             }
         }
+
 
         for (GameObject gameObject: gameObjects) {
             if (gameObject.isActive()) {
@@ -151,16 +151,11 @@ public class GameObject {
     }
 
     public void executeAction() {
-        Iterator<Action> iterator = actionList.iterator();
-        while(iterator.hasNext()) {
-            Action action = iterator.next();
-            if (action.execute(this)) {
-                iterator.remove();
-            }
-        }
+        actionList.removeIf(action -> action.execute(this));
+        children.forEach(GameObject::executeAction);
     }
 
-    public void runAction(Action action) {
+    public void addAction(Action action) {
         actionList.add(action);
     }
 

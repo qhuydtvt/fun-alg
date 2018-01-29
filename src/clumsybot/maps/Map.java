@@ -1,6 +1,7 @@
 package clumsybot.maps;
 
 import clumsybot.Settings;
+import clumsybot.bots.Bot;
 import tkbases.GameObject;
 import tkbases.Vector2D;
 
@@ -14,11 +15,18 @@ public class Map extends GameObject {
     public int numOfColumns;
     public int numOfRows;
 
-    public Map(int numOfColumns, int numOfRows) {
+    public static final Map instance = new Map(10, 10);
+
+    private Map(int numOfColumns, int numOfRows) {
         super();
         this.numOfColumns = numOfColumns;
         this.numOfRows = numOfRows;
         this.setupCells();
+        this.setupBot();
+    }
+
+    private void setupBot() {
+        this.children.add(Bot.instance);
     }
 
     private void setupCells() {
@@ -31,10 +39,5 @@ public class Map extends GameObject {
                 this.children.add(newMapCell);
             }
         }
-    }
-
-    @Override
-    public void render(Graphics graphics, Vector2D rootPosition) {
-        super.render(graphics, rootPosition);
     }
 }

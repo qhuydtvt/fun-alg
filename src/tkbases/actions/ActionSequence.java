@@ -20,6 +20,10 @@ public class ActionSequence implements Action {
         currentActionIndex = 0;
     }
 
+    public void addAction(Action action) {
+        actionList.add(action);
+    }
+
     @Override
     public boolean execute(GameObject owner) {
         if (currentActionIndex >= actionList.size()) {

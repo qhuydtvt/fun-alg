@@ -1,5 +1,6 @@
 package clumsybot;
 
+import clumsybot.bots.Bot;
 import clumsybot.maps.Map;
 import tkbases.GameCanvas;
 import tkbases.GameObject;
@@ -15,11 +16,17 @@ public class BotCanvas extends GameCanvas {
     }
 
     private void setupMap() {
-        Map map = new Map(10, 10);
+        Map map = Map.instance;
         map.position.set(100, 100);
         GameObject.add(map);
     }
 
     private void setupBot() {
+        for(int i = 0; i < 4; i++) {
+            for(int j = 0; j < 1; j ++) {
+                Bot.instance.right();
+            }
+            Bot.instance.forward();
+        }
     }
 }
