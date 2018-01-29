@@ -22,11 +22,7 @@ public class BotCanvas extends GameCanvas {
     }
 
     private void setupBot() {
-        for(int i = 0; i < 4; i++) {
-            for(int j = 0; j < 1; j ++) {
-                Bot.instance.right();
-            }
-            Bot.instance.forward();
-        }
+//        Bot.instance.right();
+//        Bot.instance.forward();
     }
 }

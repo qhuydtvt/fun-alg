@@ -2,6 +2,7 @@ package clumsybot.maps;
 
 import clumsybot.Settings;
 import clumsybot.bots.Bot;
+import clumsybot.grabables.Gem;
 import tkbases.GameObject;
 import tkbases.Vector2D;
 
@@ -22,11 +23,22 @@ public class Map extends GameObject {
         this.numOfColumns = numOfColumns;
         this.numOfRows = numOfRows;
         this.setupCells();
+        this.setupGems();
         this.setupBot();
     }
 
+    private void setupGems() {
+        Gem gem = new Gem();
+        gem.position.set(Settings.MAP_CELL_SIZE, 0);
+        this.children.add(gem);
+        Bot.instance.pickUp(gem);
+    }
+
     private void setupBot() {
+//        Bot.instance.right();
         this.children.add(Bot.instance);
+        Bot.instance.right();
+        Bot.instance.forward();
     }
 
     private void setupCells() {

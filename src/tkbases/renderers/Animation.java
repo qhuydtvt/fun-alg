@@ -64,7 +64,7 @@ public class Animation implements Renderer {
     }
 
     @Override
-    public void render(Graphics graphics, Vector2D position) {
+    public void render(Graphics graphics, Vector2D position, Transform transform) {
         if (loop || !hasEnded) {
             delayCount++;
             if (delayCount > delayMultiplier) {

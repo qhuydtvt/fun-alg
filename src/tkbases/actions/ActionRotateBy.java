@@ -21,7 +21,7 @@ public class ActionRotateBy implements Action {
 
     @Override
     public boolean execute(GameObject owner) {
-        Transform transform = ((Transformable)owner.renderer).getTransform();
+        Transform transform = owner.transform;
 
         if (destAngle == -1) {
             destAngle = transform.angle + angleDelta;

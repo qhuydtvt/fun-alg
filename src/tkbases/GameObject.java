@@ -2,6 +2,7 @@ package tkbases;
 
 import tkbases.actions.Action;
 import tkbases.renderers.Renderer;
+import tkbases.renderers.Transform;
 
 import java.awt.Graphics;
 import java.util.List;
@@ -14,6 +15,7 @@ public class GameObject {
 
     protected boolean isActive = true;
     public Vector2D position;
+    public Transform transform;
     public Renderer renderer;
     protected List<GameObject> children;
     protected Vector2D screenPosition;
@@ -108,6 +110,7 @@ public class GameObject {
         this.position = position;
         this.screenPosition = new Vector2D(position.x, position.y);
         this.renderer = renderer;
+        this.transform = new Transform();
         children = new Vector<>();
         actionList = new Vector<>();
     }
@@ -129,7 +132,7 @@ public class GameObject {
         if (isActive) {
             Vector2D drawPosition = position.add(rootPosition);
             if (renderer != null) {
-                renderer.render(graphics, drawPosition);
+                renderer.render(graphics, drawPosition, transform);
             }
             for (GameObject gameObject: children) {
                 gameObject.render(graphics, drawPosition);
