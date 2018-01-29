@@ -81,13 +81,39 @@ public class Bot extends GameObject {
     }
 
     public void pickUp(Pickable pickable) {
-        this.pickable = pickable;
-        this.joint = pickable.getPosition().subtract(this.position);
-        this.startJointAngle = transform.angle;
+        sequence.addAction(new Action() {
+            @Override
+            public boolean execute(GameObject owner) {
+                Bot bot = (Bot)owner;
+                bot.pickable = pickable;
+                bot.joint = pickable.getPosition().subtract(bot.position);
+                bot.startJointAngle = bot.transform.angle;
+                return true;
+            }
+
+            @Override
+            public void reset() {
+
+            }
+        });
     }
 
     public void putDown() {
+        sequence.addAction(new Action() {
+            @Override
+            public boolean execute(GameObject owner) {
+                Bot bot = (Bot)owner;
+                bot.pickable = null;
+                bot.joint = null;
+                bot.startJointAngle = 0;
+                return true;
+            }
 
+            @Override
+            public void reset() {
+
+            }
+        });
     }
 
     @Override

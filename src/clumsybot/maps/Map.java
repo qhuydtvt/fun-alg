@@ -39,6 +39,9 @@ public class Map extends GameObject {
         this.children.add(Bot.instance);
         Bot.instance.right();
         Bot.instance.forward();
+        Bot.instance.putDown();
+        Bot.instance.right();
+        Bot.instance.forward();
     }
 
     private void setupCells() {
