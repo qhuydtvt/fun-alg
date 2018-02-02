@@ -1,5 +1,6 @@
-package clumsybot.maps;
+package clumsybot.maps.walls;
 
+import clumsybot.maps.MapObject;
 import tkbases.renderers.ImageRenderer;
 
 /**

@@ -1,25 +1,30 @@
 package clumsybot.bots;
 
-import clumsybot.BotDirection;
+import clumsybot.MapDirection;
 import clumsybot.Settings;
 import clumsybot.maps.Map;
 import clumsybot.maps.MapObject;
-import clumsybot.maps.MapPosition;
+import clumsybot.maps.MapVector;
+import clumsybot.maps.checks.Check;
+import clumsybot.maps.checks.CheckResult;
+import clumsybot.maps.pickables.Gem;
 import clumsybot.maps.pickables.Pickable;
+import clumsybot.maps.walls.Wall;
 import tkbases.GameObject;
 import tkbases.Vector2D;
 import tkbases.actions.*;
 import tkbases.renderers.ImageRenderer;
+import tkbases.utils.AudioUtils;
 
-import java.util.Set;
+import javax.sound.sampled.Clip;
 
 /**
  * Created by huynq on 1/28/18.
  */
 public class Bot extends GameObject {
-    public MapPosition mapPosition;
+    private MapVector mapPosition;
 
-    public BotDirection direction;
+    private MapDirection direction;
 
     private ImageRenderer imageRenderer;
 
@@ -35,61 +40,123 @@ public class Bot extends GameObject {
         super();
         imageRenderer = new ImageRenderer("assets/images/robot.png");
         renderer = imageRenderer;
-        mapPosition = new MapPosition();
-        direction = BotDirection.RIGHT;
+        mapPosition = new MapVector();
+        direction = MapDirection.RIGHT;
         sequence = new ActionSequence();
         addAction(sequence);
     }
 
+    private void appendAction(Action action) {
+        sequence.addAction(action);
+    }
+
+    public MapVector getMapPosition() {
+        return mapPosition;
+    }
+
+    public int getCol() {
+        return mapPosition.col;
+    }
+
+    public int getRow() {
+        return mapPosition.row;
+    }
+
+    public MapDirection getDirection() {
+        return direction;
+    }
+
+    public boolean wallAhead() {
+        return Map.instance.objectAt(aheadMapPosition()) instanceof Wall;
+    }
+
+    public boolean gemAhead() {
+        return Map.instance.objectAt(aheadMapPosition()) instanceof Gem;
+    }
+
+    private Vector2D facing() {
+        switch (direction) {
+            case LEFT:
+                return Vector2D.LEFT.multiply(Settings.MAP_CELL_SIZE);
+            case RIGHT:
+                return Vector2D.RIGHT.multiply(Settings.MAP_CELL_SIZE);
+            case UP:
+                return Vector2D.UP.multiply(Settings.MAP_CELL_SIZE);
+            case DOWN:
+                return Vector2D.DOWN.multiply(Settings.MAP_CELL_SIZE);
+            default:
+                return Vector2D.RIGHT.multiply(Settings.MAP_CELL_SIZE);
+        }
+    }
+
+    private MapVector mapFacing() {
+        switch (direction) {
+            case LEFT:
+                return MapVector.LEFT.clone();
+            case RIGHT:
+                return MapVector.RIGHT.clone();
+            case UP:
+                return MapVector.UP.clone();
+            case DOWN:
+                return MapVector.DOWN.clone();
+        }
+
+        return MapVector.RIGHT;
+    }
 
     public void forward() {
         if (!Map.instance.validPosition(aheadMapPosition())) return;
 
-        Vector2D moveDelta = Vector2D.ZERO;
-
-        switch (direction) {
-            case LEFT:
-                mapPosition.col--;
-                moveDelta = Vector2D.LEFT.multiply(Settings.MAP_CELL_SIZE);
-                break;
-            case RIGHT:
-                mapPosition.col++;
-                moveDelta = Vector2D.RIGHT.multiply(Settings.MAP_CELL_SIZE);
-                break;
-            case UP:
-                mapPosition.row--;
-                moveDelta = Vector2D.UP.multiply(Settings.MAP_CELL_SIZE);
-                break;
-            case DOWN:
-                mapPosition.row++;
-                moveDelta = Vector2D.DOWN.multiply(Settings.MAP_CELL_SIZE);
-                break;
-        }
-
-        sequence.addAction(new ActionMoveBy(moveDelta, 15));
+        mapPosition.addUp(mapFacing());
+        appendAction(new ActionMoveBy(facing(), 15));
     }
 
     public void right() {
         switch (direction) {
             case LEFT:
-                this.direction = BotDirection.UP;
+                this.direction = MapDirection.UP;
                 break;
             case RIGHT:
-                this.direction = BotDirection.DOWN;
+                this.direction = MapDirection.DOWN;
                 break;
             case UP:
-                this.direction = BotDirection.RIGHT;
+                this.direction = MapDirection.RIGHT;
                 break;
             case DOWN:
-                this.direction = BotDirection.LEFT;
+                this.direction = MapDirection.LEFT;
                 break;
         }
 
-        sequence.addAction(new ActionRotateBy(90, 15));
+        appendAction(new ActionRotateBy(90, 15));
     }
 
-    private MapPosition aheadMapPosition() {
-        MapPosition aheadPosition = mapPosition.clone();
+    public void check(Check ch) {
+        appendAction(new Action() {
+
+            Clip winningSound = AudioUtils.loadSound("assets/music/wining.wav");
+            Clip lostSound = AudioUtils.loadSound("assets/music/lost.wav");
+
+            @Override
+            public boolean execute(GameObject owner) {
+                Bot bot = (Bot) owner;
+                CheckResult result = ch.check(bot);
+                if (result.pass) {
+                    winningSound.start();
+                } else {
+                    lostSound.start();
+                }
+                return true;
+            }
+
+            @Override
+            public void reset() {
+
+            }
+        });
+    }
+
+    private MapVector aheadMapPosition() {
+        MapVector aheadPosition = mapPosition.clone();
 
         switch (direction) {
             case LEFT: aheadPosition.col--; break;
@@ -101,22 +168,9 @@ public class Bot extends GameObject {
         return aheadPosition;
     }
 
-    private Vector2D aheadPosition() {
-        Vector2D returnValue = position.clone();
-
-        switch (direction) {
-            case LEFT: returnValue.x -= Settings.MAP_CELL_SIZE; break;
-            case RIGHT: returnValue.x += Settings.MAP_CELL_SIZE; break;
-            case UP: returnValue.y -= Settings.MAP_CELL_SIZE; break;
-            case DOWN: returnValue.y += Settings.MAP_CELL_SIZE; break;
-        }
-
-        return returnValue;
-    }
-
     public void pickUp() {
 
-        MapPosition aheadPosition = this.aheadMapPosition();
+        MapVector aheadPosition = this.aheadMapPosition();
 
         MapObject mapObject = Map.instance.objectAt(aheadPosition);
 
@@ -140,12 +194,15 @@ public class Bot extends GameObject {
 
                 }
             });
+
+            sequence.addAction(new ActionWait(10));
         }
     }
 
     public void putDown() {
-        if(Map.instance.objectAt(aheadMapPosition()) != null) return;
+        if (!Map.instance.validPosition(aheadMapPosition())) return;
 
+        Map.instance.setMapObjectAt((MapObject)this.pickable, aheadMapPosition());
         Vector2D putDownPosition = Map.translate(aheadMapPosition());
 
         sequence.addAction(new Action() {
@@ -153,7 +210,6 @@ public class Bot extends GameObject {
             public boolean execute(GameObject owner) {
                 Bot bot = (Bot)owner;
                 bot.pickable.getPosition().set(putDownPosition);
-                Map.instance.setMapObjectAt((MapObject)bot.pickable, aheadMapPosition());
                 bot.pickable = null;
                 bot.joint = null;
                 bot.startJointAngle = 0;
@@ -162,7 +218,6 @@ public class Bot extends GameObject {
 
             @Override
             public void reset() {
-
             }
         });
     }

@@ -3,7 +3,7 @@ package clumsybot;
 /**
  * Created by huynq on 1/28/18.
  */
-public enum BotDirection {
+public enum MapDirection {
     LEFT,
     RIGHT,
     UP,

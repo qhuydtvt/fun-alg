@@ -1,6 +1,6 @@
 package clumsybot.maps.pickables;
 
-import clumsybot.BotDirection;
+import clumsybot.MapDirection;
 import tkbases.Vector2D;
 
 /**
@@ -8,5 +8,7 @@ import tkbases.Vector2D;
  */
 public interface Pickable {
     Vector2D getPosition();
-    void move(BotDirection direction);
+    void move(MapDirection direction);
+    void pickUp();
+    void putDown();
 }

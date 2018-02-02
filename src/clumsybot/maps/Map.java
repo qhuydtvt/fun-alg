@@ -2,7 +2,9 @@ package clumsybot.maps;
 
 import clumsybot.Settings;
 import clumsybot.bots.Bot;
+import clumsybot.maps.checkpoints.CheckPoint;
 import clumsybot.maps.pickables.Gem;
+import clumsybot.maps.walls.Wall;
 import tkbases.GameObject;
 import tkbases.Vector2D;
 
@@ -10,12 +12,16 @@ import tkbases.Vector2D;
  * Created by huynq on 1/28/18.
  */
 public class Map extends GameObject {
-    public int numOfColumns;
-    public int numOfRows;
+    private int numOfColumns;
+    private int numOfRows;
 
-    public MapObject[][] mapObjects;
+    private MapObject[][] mapObjects;
 
     public static final Map instance = new Map(10, 10);
+
+    public static Vector2D translate(MapVector position) {
+        return new Vector2D(position.col * Settings.MAP_CELL_SIZE, position.row * Settings.MAP_CELL_SIZE);
+    }
 
     private Map(int numOfColumns, int numOfRows) {
         super();
@@ -24,7 +30,12 @@ public class Map extends GameObject {
         this.setupCells();
         this.setupMapObjects();
         this.setupGems();
+        this.setupCheckPoints();
         this.setupBot();
+    }
+
+    private void setupCheckPoints() {
+        addMapObject(new CheckPoint(), 2, 3);
     }
 
     private void setupMapObjects() {
@@ -44,11 +55,11 @@ public class Map extends GameObject {
         }
     }
 
-    public void setMapObjectAt(MapObject mapObject, MapPosition mapPosition) {
-        setMapObjectAt(mapObject, mapPosition.row, mapPosition.col);
+    public void setMapObjectAt(MapObject mapObject, MapVector mapVector) {
+        setMapObjectAt(mapObject, mapVector.row, mapVector.col);
     }
 
-    public MapObject objectAt(MapPosition position) {
+    public MapObject objectAt(MapVector position) {
         return objectAt(position.row, position.col);
     }
 
@@ -61,17 +72,17 @@ public class Map extends GameObject {
 
     public boolean validPosition(int row, int col) {
         if (row >= 0 && row < numOfRows && col >= 0 && col < numOfColumns) {
-            return mapObjects[row][col] == null;
+            return mapObjects[row][col] == null || mapObjects[row][col] instanceof CheckPoint;
         }
         return false;
     }
 
-    public boolean validPosition(MapPosition position) {
+    public boolean validPosition(MapVector position) {
         return validPosition(position.row, position.col);
     }
 
     private void setupGems() {
-        addMapObject(new Gem(), 0, 1);
+        addMapObject(new Gem(), 0, 2);
         addMapObject(new Wall(), 1, 1);
     }
 
@@ -91,7 +102,15 @@ public class Map extends GameObject {
         }
     }
 
-    public static Vector2D translate(MapPosition position) {
-        return new Vector2D(position.col * Settings.MAP_CELL_SIZE, position.row * Settings.MAP_CELL_SIZE);
+    public MapObject[][] getMapObjects() {
+        return mapObjects;
+    }
+
+    public int getNumOfColumns() {
+        return numOfColumns;
+    }
+
+    public int getNumOfRows() {
+        return numOfRows;
     }
 }

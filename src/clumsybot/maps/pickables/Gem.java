@@ -1,8 +1,7 @@
 package clumsybot.maps.pickables;
 
-import clumsybot.BotDirection;
+import clumsybot.MapDirection;
 import clumsybot.maps.MapObject;
-import tkbases.GameObject;
 import tkbases.renderers.ImageRenderer;
 
 /**
@@ -16,6 +15,16 @@ public class Gem extends MapObject implements Pickable {
     }
 
     @Override
-    public void move(BotDirection direction) {
+    public void move(MapDirection direction) {
+    }
+
+    @Override
+    public void pickUp() {
+
+    }
+
+    @Override
+    public void putDown() {
+
     }
 }
