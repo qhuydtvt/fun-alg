@@ -3,7 +3,6 @@ package clumsybot;
 import clumsybot.bots.Bot;
 import clumsybot.maps.Map;
 import clumsybot.maps.checks.BotPositionCheck;
-import clumsybot.maps.checks.Check;
 import tkbases.GameCanvas;
 import tkbases.GameObject;
 
@@ -38,7 +37,7 @@ public class BotCanvas extends GameCanvas {
 
         Bot.instance.forward();
         Bot.instance.right();
-        Bot.instance.forward();
+//        Bot.instance.forward();
 
         Bot.instance.check(new BotPositionCheck());
 
