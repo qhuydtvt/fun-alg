@@ -18,6 +18,8 @@ import tkbases.utils.AudioUtils;
 
 import javax.sound.sampled.Clip;
 
+import static clumsybot.Settings.soundEffectEnabled;
+
 /**
  * Created by huynq on 1/28/18.
  */
@@ -131,19 +133,23 @@ public class Bot extends GameObject {
     }
 
     public void check(Check ch) {
-        appendAction(new Action() {
+        Clip winningSound = AudioUtils.loadSound("assets/music/wining.wav");
+        Clip lostSound = AudioUtils.loadSound("assets/music/lost.wav");
 
-            Clip winningSound = AudioUtils.loadSound("assets/music/wining.wav");
-            Clip lostSound = AudioUtils.loadSound("assets/music/lost.wav");
+        appendAction(new Action() {
 
             @Override
             public boolean execute(GameObject owner) {
                 Bot bot = (Bot) owner;
                 CheckResult result = ch.check(bot);
                 if (result.pass) {
-                    winningSound.start();
+                    if (soundEffectEnabled) {
+                        winningSound.start();
+                    }
                 } else {
-                    lostSound.start();
+                    if (soundEffectEnabled) {
+                        lostSound.start();
+                    }
                 }
                 return true;
             }

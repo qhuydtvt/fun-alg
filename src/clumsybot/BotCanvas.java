@@ -1,6 +1,7 @@
 package clumsybot;
 
 import clumsybot.bots.Bot;
+import clumsybot.hud.HUD;
 import clumsybot.maps.Map;
 import clumsybot.maps.checks.BotPositionCheck;
 import tkbases.GameCanvas;
@@ -15,6 +16,11 @@ public class BotCanvas extends GameCanvas {
         super(screenWidth, screenHeight);
         setupMap();
         setupBot();
+        setupHUD();
+    }
+
+    private void setupHUD() {
+        GameObject.add(new HUD());
     }
 
     private void setupMap() {
@@ -37,9 +43,8 @@ public class BotCanvas extends GameCanvas {
 
         Bot.instance.forward();
         Bot.instance.right();
-//        Bot.instance.forward();
+        Bot.instance.forward();
 
         Bot.instance.check(new BotPositionCheck());
-
     }
 }

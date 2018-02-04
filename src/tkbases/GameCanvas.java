@@ -1,5 +1,7 @@
 package tkbases;
 
+import tkbases.inputs.InputManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -15,6 +17,11 @@ public class GameCanvas extends JPanel {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         this.setupBuffered();
+        setupMouseEvents();
+    }
+
+    private void setupMouseEvents() {
+        this.addMouseListener(InputManager.instance);
     }
 
     private void setupBuffered() {
