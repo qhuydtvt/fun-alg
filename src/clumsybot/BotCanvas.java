@@ -15,8 +15,11 @@ public class BotCanvas extends GameCanvas {
     public BotCanvas(int screenWidth, int screenHeight) {
         super(screenWidth, screenHeight);
         setupMap();
-        setupBot();
         setupHUD();
+        Bot bot = new Bot();
+        setupBot(bot);
+        bot.check(new BotPositionCheck());
+        Map.instance.addChild(bot);
     }
 
     private void setupHUD() {
@@ -29,22 +32,20 @@ public class BotCanvas extends GameCanvas {
         GameObject.add(map);
     }
 
-    private void setupBot() {
-        Bot.instance.forward();
-        Bot.instance.pickUp();
-        Bot.instance.forward();
-        Bot.instance.right();
-        Bot.instance.forward();
-        Bot.instance.putDown();
+    private void setupBot(Bot bot) {
+        bot.forward();
+        bot.pickUp();
+        bot.forward();
+        bot.right();
+        bot.forward();
+        bot.putDown();
 
         for(int i = 0; i < 3; i++) {
-            Bot.instance.right();
+            bot.right();
         }
 
-        Bot.instance.forward();
-        Bot.instance.right();
-        Bot.instance.forward();
-
-        Bot.instance.check(new BotPositionCheck());
+        bot.forward();
+        bot.right();
+        bot.forward();
     }
 }

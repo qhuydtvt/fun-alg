@@ -2,8 +2,6 @@ package clumsybot;
 
 import tkbases.GameWindow;
 
-import java.util.Set;
-
 /**
  * Created by huynq on 1/28/18.
  */

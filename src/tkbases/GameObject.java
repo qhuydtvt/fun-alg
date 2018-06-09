@@ -162,6 +162,10 @@ public class GameObject {
         actionList.add(action);
     }
 
+    public void addChild(GameObject gameObject) {
+        this.children.add(gameObject);
+    }
+
     public void reset() {
         actionList.clear();
     }

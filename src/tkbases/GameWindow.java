@@ -32,6 +32,7 @@ public class GameWindow extends JFrame {
                 System.exit(0);
             }
         });
+        this.setLocationRelativeTo(null);
     }
 
     private void setupGameCanvas(GameCanvas gameCanvas) {

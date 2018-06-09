@@ -38,7 +38,7 @@ public class Bot extends GameObject {
 
     public static final Bot instance = new Bot();
 
-    private Bot() {
+    public Bot() {
         super();
         imageRenderer = new ImageRenderer("assets/images/robot.png");
         renderer = imageRenderer;
@@ -128,7 +128,6 @@ public class Bot extends GameObject {
                 this.direction = MapDirection.LEFT;
                 break;
         }
-
         appendAction(new ActionRotateBy(90, 15));
     }
 

@@ -27,9 +27,7 @@ public class SoundControl extends GameObject {
         if (InputManager.instance.leftMouseInfo.pressed && !disabled) {
             if(InputManager.instance.leftMouseInfo.inside(this)) {
                 Settings.soundEffectEnabled = !Settings.soundEffectEnabled;
-                System.out.println("sound effect" + Settings.soundEffectEnabled);
                 disabled = true;
-
                 this.addAction(new ActionSequence(
                         new ActionWait(30),
                         new Action() {

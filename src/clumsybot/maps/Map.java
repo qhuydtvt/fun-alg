@@ -31,7 +31,6 @@ public class Map extends GameObject {
         this.setupMapObjects();
         this.setupGems();
         this.setupCheckPoints();
-        this.setupBot();
     }
 
     private void setupCheckPoints() {
@@ -84,10 +83,6 @@ public class Map extends GameObject {
     private void setupGems() {
         addMapObject(new Gem(), 0, 2);
         addMapObject(new Wall(), 1, 1);
-    }
-
-    private void setupBot() {
-        this.children.add(Bot.instance);
     }
 
     private void setupCells() {
