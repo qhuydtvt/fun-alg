@@ -1,7 +1,6 @@
 package clumsybot.hud;
 
 import clumsybot.Settings;
-import com.sun.tools.classfile.Opcode;
 import tkbases.GameObject;
 import tkbases.actions.Action;
 import tkbases.actions.ActionSequence;
