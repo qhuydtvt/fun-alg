@@ -7,7 +7,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class GameWindow extends JFrame {
-    private GameCanvas gameCanvas;
+    protected GameCanvas gameCanvas;
     private long lastTime = 0;
 
     private static final int screenWidth = 800;
@@ -29,10 +29,15 @@ public class GameWindow extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
+                closing();
                 System.exit(0);
             }
         });
         this.setLocationRelativeTo(null);
+    }
+
+    protected void closing() {
+
     }
 
     private void setupGameCanvas(GameCanvas gameCanvas) {

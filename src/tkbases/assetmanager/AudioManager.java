@@ -10,10 +10,10 @@ import javax.sound.sampled.Clip;
  */
 public class AudioManager {
     public static Clip loadSFXFromAsset(String audioUrl) {
-        return AudioUtils.loadSound(String.format(String.format("assets/music/sfx/%s", audioUrl)));
+        return AudioUtils.loadSound(String.format(String.format("music/sfx/%s", audioUrl)));
     }
 
     public static MediaPlayer playBGMFromAsset(String url) {
-        return AudioUtils.playMedia(String.format("assets/music/bgm/%s", url));
+        return AudioUtils.playMedia(String.format("music/bgm/%s", url));
     }
 }

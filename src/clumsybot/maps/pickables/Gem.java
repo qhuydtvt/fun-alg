@@ -11,7 +11,7 @@ public class Gem extends MapObject implements Pickable {
 
     public Gem() {
         super();
-        this.renderer = new ImageRenderer("assets/images/small_blue_square.png");
+        this.renderer = new ImageRenderer("images/small_blue_square.png");
     }
 
     @Override

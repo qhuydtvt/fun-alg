@@ -10,7 +10,7 @@ import java.util.HashMap;
  */
 public class SpriteManager {
     public static BufferedImage loadAssetImage(String url) {
-        String fullUrl = String.format("assets/images/%s", url);
+        String fullUrl = String.format("images/%s", url);
         if (imageHashMap.containsKey(fullUrl)) {
             return imageHashMap.get(fullUrl);
         } else {

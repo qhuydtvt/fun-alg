@@ -16,7 +16,7 @@ public class SoundControl extends GameObject {
 
     public SoundControl() {
         super();
-        this.renderer = new ImageRenderer("assets/images/sound_on.png");
+        this.renderer = new ImageRenderer("images/sound_on.png");
         disabled = false;
     }
 

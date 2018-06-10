@@ -18,6 +18,9 @@ public class BotCanvas extends GameCanvas {
 
     public BotCanvas(int screenWidth, int screenHeight) {
         super(screenWidth, screenHeight);
+    }
+
+    public void setup() {
         setupMap();
         setupHUD();
         Bot bot = new Bot();

@@ -13,9 +13,11 @@ import static java.lang.String.format;
  */
 public class SpriteUtils {
 
+    private static ClassLoader classLoader = SpriteUtils.class.getClassLoader();
+
     public static BufferedImage loadImage(String url) {
         try {
-            return ImageIO.read(new File(url));
+            return ImageIO.read(classLoader.getResource(url));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -23,14 +23,6 @@ public class Animation implements Renderer {
     private boolean blink;
     private boolean reverseOrder;
 
-//    public Animation(BufferedImage... images) {
-//        this(true, images);
-//    }
-
-//    public Animation(boolean loop, BufferedImage[] images) {
-//        this(loop, images, Settings.ANIMATION_DELAY_MULTIPLIER);
-//    }
-
     public Animation(boolean loop, BufferedImage[] images, int delayMultiplier) {
         this(loop, images, delayMultiplier, false);
     }

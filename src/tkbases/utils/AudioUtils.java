@@ -6,12 +6,15 @@ import javafx.scene.media.MediaPlayer;
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * Created by huynq on 5/12/17.
  */
 @SuppressWarnings("deprecation")
 public class AudioUtils {
+    private static ClassLoader classLoader = SpriteUtils.class.getClassLoader();
 
     /**
      * For playing sound effect: wav
@@ -19,9 +22,8 @@ public class AudioUtils {
      * @return
      */
     public static Clip loadSound(String audioUrl) {
-        File soundFile = new File(audioUrl);
         try {
-            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(classLoader.getResourceAsStream(audioUrl));
             Clip clip = AudioSystem.getClip();
             clip.open(audioIn);
             return clip;
@@ -41,9 +43,14 @@ public class AudioUtils {
      * @return
      */
     public static MediaPlayer playMedia(String audioUrl) {
-        String uriString = new File(audioUrl).toURI().toString();
-        MediaPlayer mediaPlayer = new MediaPlayer(new Media(uriString));
-        mediaPlayer.play();
-        return mediaPlayer;
+        try {
+            URI uri = classLoader.getResource(audioUrl).toURI();
+            MediaPlayer mediaPlayer = new MediaPlayer(new Media(uri.toString()));
+            mediaPlayer.play();
+            return mediaPlayer;
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

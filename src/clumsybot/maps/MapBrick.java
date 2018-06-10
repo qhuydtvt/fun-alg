@@ -13,6 +13,6 @@ public class MapBrick extends GameObject {
 
     public MapBrick() {
         super();
-        this.renderer = new ImageRenderer("assets/images/brick.png");
+        this.renderer = new ImageRenderer("images/brick.png");
     }
 }

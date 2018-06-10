@@ -9,6 +9,6 @@ import tkbases.renderers.ImageRenderer;
 public class CheckPoint extends MapObject {
     public CheckPoint() {
         super();
-        this.renderer = new ImageRenderer("assets/images/red_dot.png");
+        this.renderer = new ImageRenderer("images/red_dot.png");
     }
 }

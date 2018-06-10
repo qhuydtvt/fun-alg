@@ -7,8 +7,7 @@ import tkbases.GameWindow;
  */
 public class Program {
     public static void main(String[] args) {
-        BotCanvas botCanvas = new BotCanvas();
-        GameWindow window = new GameWindow(botCanvas);
-        window.gameLoop();
+        BotWindow botWindow = new BotWindow();
+        botWindow.mainLoop();
     }
 }

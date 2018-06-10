@@ -36,9 +36,15 @@ public class Bot extends GameObject {
     private Vector2D joint;
     private float startJointAngle;
 
+    public static Bot getInstance() {
+        return instance;
+    }
+
+    private static Bot instance;
+
     public Bot() {
         super();
-        imageRenderer = new ImageRenderer("assets/images/robot.png");
+        imageRenderer = new ImageRenderer("images/robot.png");
         renderer = imageRenderer;
         mapPosition = new MapVector();
         direction = MapDirection.RIGHT;
@@ -130,8 +136,8 @@ public class Bot extends GameObject {
     }
 
     public void check(Check ch) {
-        Clip winningSound = AudioUtils.loadSound("assets/music/wining.wav");
-        Clip lostSound = AudioUtils.loadSound("assets/music/lost.wav");
+        Clip winningSound = AudioUtils.loadSound("music/wining.wav");
+        Clip lostSound = AudioUtils.loadSound("music/lost.wav");
 
         appendAction(new Action() {
 

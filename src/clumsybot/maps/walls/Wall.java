@@ -9,6 +9,6 @@ import tkbases.renderers.ImageRenderer;
 public class Wall extends MapObject {
     public Wall() {
         super();
-        this.renderer = new ImageRenderer("assets/images/wall.png");
+        this.renderer = new ImageRenderer("images/wall.png");
     }
 }
