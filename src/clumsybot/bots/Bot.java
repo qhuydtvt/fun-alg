@@ -36,8 +36,6 @@ public class Bot extends GameObject {
     private Vector2D joint;
     private float startJointAngle;
 
-    public static final Bot instance = new Bot();
-
     public Bot() {
         super();
         imageRenderer = new ImageRenderer("assets/images/robot.png");

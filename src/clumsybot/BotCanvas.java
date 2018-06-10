@@ -12,6 +12,10 @@ import tkbases.GameObject;
  */
 public class BotCanvas extends GameCanvas {
 
+    public BotCanvas() {
+        this(Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT);
+    }
+
     public BotCanvas(int screenWidth, int screenHeight) {
         super(screenWidth, screenHeight);
         setupMap();
