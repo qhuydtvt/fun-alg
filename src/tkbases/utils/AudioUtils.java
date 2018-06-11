@@ -4,10 +4,10 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import javax.sound.sampled.*;
-import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 /**
  * Created by huynq on 5/12/17.
@@ -23,9 +23,10 @@ public class AudioUtils {
      */
     public static Clip loadSound(String audioUrl) {
         try {
-            AudioInputStream audioIn = AudioSystem.getAudioInputStream(classLoader.getResourceAsStream(audioUrl));
+            URL url = classLoader.getResource(audioUrl);
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
             Clip clip = AudioSystem.getClip();
-            clip.open(audioIn);
+            clip.open(audioInputStream);
             return clip;
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
