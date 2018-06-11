@@ -12,6 +12,8 @@ import tkbases.GameObject;
  */
 public class BotCanvas extends GameCanvas {
 
+    private boolean environmentSetup;
+
     public BotCanvas() {
         this(Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT);
     }
@@ -20,11 +22,17 @@ public class BotCanvas extends GameCanvas {
         super(screenWidth, screenHeight);
     }
 
-    public void setup() {
+    public void setupEnvironment() {
         setupMap();
         setupHUD();
-        Bot bot = new Bot();
-        setupBot(bot);
+        environmentSetup = true;
+    }
+
+    public void setupBot() throws Exception {
+        if(!environmentSetup) {
+            throw new Exception("setupEnvironment() must be called first");
+        }
+        Bot bot = Bot.getInstance();
         bot.check(new BotPositionCheck());
         Map.instance.addChild(bot);
     }
@@ -37,22 +45,5 @@ public class BotCanvas extends GameCanvas {
         Map map = Map.instance;
         map.position.set(100, 100);
         GameObject.add(map);
-    }
-
-    private void setupBot(Bot bot) {
-        bot.forward();
-        bot.pickUp();
-        bot.forward();
-        bot.right();
-        bot.forward();
-        bot.putDown();
-
-        for(int i = 0; i < 3; i++) {
-            bot.right();
-        }
-
-        bot.forward();
-        bot.right();
-        bot.forward();
     }
 }

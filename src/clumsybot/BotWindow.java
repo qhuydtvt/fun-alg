@@ -10,6 +10,7 @@ public class BotWindow extends GameWindow {
         super(new BotCanvas());
         AudioUtils.initialize();
         this.mediaPlayer = AudioUtils.playMedia("music/sample.mp3");
+        ((BotCanvas)gameCanvas).setupEnvironment();
     }
 
     @Override
@@ -20,7 +21,12 @@ public class BotWindow extends GameWindow {
     }
 
     public void mainLoop() {
-        ((BotCanvas)gameCanvas).setup();
+        try {
+            ((BotCanvas)gameCanvas).setupBot();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
         this.gameLoop();
     }
 }

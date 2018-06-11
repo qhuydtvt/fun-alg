@@ -50,6 +50,7 @@ public class Bot extends GameObject {
         direction = MapDirection.RIGHT;
         sequence = new ActionSequence();
         addAction(sequence);
+        instance = this;
     }
 
     private void appendAction(Action action) {
