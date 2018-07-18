@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="8" height="8" tilewidth="64" tileheight="64" infinite="0" nextobjectid="1">
+ <tileset firstgid="1" source="horizontal_wall.tsx"/>
+ <tileset firstgid="2" source="corner_bottom_left.tsx"/>
+ <tileset firstgid="3" source="Ball.tsx"/>
+ <tileset firstgid="4" source="vertical_wall.tsx"/>
+ <tileset firstgid="5" source="horizontal-wall-left-start.tsx"/>
+ <tileset firstgid="6" source="corner_top_right.tsx"/>
+ <tileset firstgid="7" source="horizontal-wall-left-end.tsx"/>
+ <tileset firstgid="8" source="corner_bottom_right.tsx"/>
+ <tileset firstgid="9" source="vertical-wall-start.tsx"/>
+ <tileset firstgid="10" name="tile_set_2" tilewidth="64" tileheight="64" tilecount="1" columns="1">
+  <image source="../real clumsy bot/fun-alg/assets/images/tile_set_2.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="11" source="top_down_character.tsx"/>
+ <tileset firstgid="12" source="join_wall_bottom.tsx"/>
+ <tileset firstgid="13" source="vertical-wall-end.tsx"/>
+ <tileset firstgid="14" source="crate.tsx"/>
+ <tileset firstgid="15" source="join_wall_left.tsx"/>
+ <tileset firstgid="16" source="checkpoint.tsx"/>
+ <tileset firstgid="17" source="crate_2.tsx"/>
+ <tileset firstgid="18" source="corner_top_left.tsx"/>
+ <layer name="map" width="8" height="8">
+  <data encoding="csv">
+5,1,1,1,1,1,1,6,
+10,10,10,10,10,10,10,4,
+18,1,1,1,1,7,10,4,
+4,10,10,10,10,10,10,4,
+4,10,10,10,10,10,10,4,
+4,10,5,1,1,1,1,8,
+4,10,10,10,10,10,10,10,
+2,1,1,1,1,7,10,10
+</data>
+ </layer>
+ <layer name="objectives" width="8" height="8">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,
+11,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,16
+</data>
+ </layer>
+</map>

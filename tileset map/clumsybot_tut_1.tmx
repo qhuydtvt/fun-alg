@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="8" height="8" tilewidth="64" tileheight="64" infinite="0" nextobjectid="1">
+ <tileset firstgid="1" source="tile_set_2.tsx"/>
+ <tileset firstgid="2" source="corner_top_left.tsx"/>
+ <tileset firstgid="3" source="corner_bottom_right.tsx"/>
+ <tileset firstgid="4" source="horizontal-wall-left-start.tsx"/>
+ <tileset firstgid="5" source="vertical-wall-start.tsx"/>
+ <tileset firstgid="6" source="horizontal_wall.tsx"/>
+ <tileset firstgid="7" source="corner_top_right.tsx"/>
+ <tileset firstgid="8" source="vertical_wall.tsx"/>
+ <tileset firstgid="9" source="top_down_character.tsx"/>
+ <tileset firstgid="10" source="corner_bottom_left.tsx"/>
+ <tileset firstgid="11" source="checkpoint.tsx"/>
+ <tileset firstgid="12" source="vertical-wall-end.tsx"/>
+ <layer name="map" width="8" height="8">
+  <data encoding="csv">
+2,6,6,6,6,6,6,7,
+8,1,1,1,1,1,1,8,
+12,1,1,1,1,1,1,8,
+1,1,1,1,1,1,1,8,
+1,1,1,1,1,1,1,8,
+1,1,1,1,1,1,1,8,
+5,1,1,1,1,1,1,8,
+10,6,6,6,6,6,6,3
+</data>
+ </layer>
+ <layer name="objectives" width="8" height="8">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+9,0,0,0,0,0,11,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0
+</data>
+ </layer>
+</map>
